@@ -18,7 +18,7 @@ public class DictionaryDAO {
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
-			throw new IllegalStateException("ドライバを読み込めませんでした");
+			throw new IllegalStateException("ドライバを込めませんでした");
 		}
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 			String sql = "SELECT id, word, explanation FROM ejdict"
