@@ -9,38 +9,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DictionaryDAO {
-	private final String JDBC_URL =
-			"jdbc:h2:tcp://localhost/ /example";
+	private final String JDBC_URL = "jdbc:postgresql://localhost:5432/dictionary";
 	private final String DB_USER = "postgres";
 	private final String DB_PASS = "psql";
-	
-	public List<dictionary> findAll(){
-		List<dictionary>empList = new ArrayList<>();
+	public List<EjDict> findByWord(String word, String mean,int maxCount) {
+		List<EjDict> dictList = new ArrayList<>();
+
 		try {
-			Class.forName("ドライバー");
-		}catch(ClassNotFoundException e) {
-			throw new IllegalStateException(
-					"ドライバを読めませんでした");
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalStateException("ドライバを読み込めませんでした");
 		}
-		try(Connection conn = DriverManager.getConnection(
-				JDBC_URL,DB_USER,DB_PASS)){
-			
-			String sql = "SELECT id,word,explanation FROM ejdict";
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "SELECT id, word, explanation FROM ejdict"
+					+ "WHERE LOWER(word) LIKE LOWER(?) AND explanation LIKE ? ORDER BY word LIMIT ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			
+			pStmt.setString(1, word + "%");
+			pStmt.setString(2, "%" + mean + "%");
+			pStmt.setInt(3, maxCount);
 			ResultSet rs = pStmt.executeQuery();
-			
-			while(rs.next()) {
-				String id = rs.getString("id");
-				String word = rs.getString("word");
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String resultWord = rs.getString("word");
 				String explanation = rs.getString("explanation");
-				dictList.add(ejdict);
+				EjDict dict = new EjDict(id, resultWord, explanation);
+				dictList.add(dict);
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 		return dictList;
 	}
-
 }

@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="model.EjDict,modelEjDictLogic,java.util.List" %>
-<!--<% -->
-<!--List<dict> dictList =-->
-<!--(List<dict>application.getAttribute("dictList");-->
-<!--%>-->
-<!--どっち？-->
-<!--<%-->
-<!--Phrase p = (Phrase)rquest.getAttribute("phrase");-->
-<!--%>-->
+<%@ page import="model.EjDict, java.util.List" %>
+<%
+List<EjDict> dictList = (List<EjDict>) request.getAttribute("dictList");
+List<String> errorList = (List<String>) request.getAttribute("errorList");
+String maxCount = (String) request.getAttribute("maxCount");
+String word = (String) request.getAttribute("word");
+String mean = (String) request.getAttribute("mean");
+if (maxCount == null) {
+	maxCount = "20";
+}
+if (word == null) {
+	word = "";
+}
+if (mean == null) {
+	mean = "";
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,13 +25,42 @@
 </head>
 <body>
 <h1>英和辞典</h1>
-<form action="search" method="get">
-<input type="text" name="resultCount">
-<input type="text" name="word" >
-<input type="submit" value="検索">
+<form action="EjDictServlet" method="get">
+	<p>
+		最大検索件数：<input type="text" name="maxCount" value="<%= maxCount %>">
+	</p>
+	<p>
+		英単語：<input type="text" name="word" value="<%= word %>">
+	</p>
+	<p>
+		意味検索：<input type="text" name="mean" value"<%= mean %>">
+	</p>
+	<p>
+		<input type="submit" value="検索">
+	</p>
 </form>
-<% for(Dict dict : dictList){ %>
-<p><%= dict.getWord() %>:<%= dict.getExplanation() %>
+<% if (errorList != null) { %>
+	<ul>
+	<% for (String error : errorList) { %>
+		<li><%= error %></li>
+	<% } %>
+	</ul>
+<% } %>
+<% if (dictList != null) { %>
+	<hr>
+	<% for (EjDict dict : dictList) { %>
+		<p>
+			<strong><%= dict.getWord() %></strong>
+		</p>
+		<%
+		String explanation = dict.getExplanation();
+		String[] explanationArray = explanation.split(" / ");
+		%>
+		<% for (String exp : explanationArray) { %>
+			<p><%= exp %></p>
+		<% } %>
+		<br>
+	<% } %>
 <% } %>
 </body>
 </html>
