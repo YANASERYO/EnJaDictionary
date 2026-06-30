@@ -8,11 +8,14 @@ public class EjDictLogic {
 	public List<String> validate(String word, String mean,String maxCount) {
 		List<String> errorList = new ArrayList<>();
 		
-		if (word == null || word.length() == 0) {
-			errorList.add("検索する英単語を指定して下さい。");
+		if (word == null) {
+			word = "";
+		}
+		if (mean == null) {
+			mean = "";
 		}
 		if (maxCount == null || maxCount.length() == 0) {
-			errorList.add("最大検索件数を指定して下さい。");
+			errorList.add("最大検索数を指定して下さい。");
 		} else {
 			try {
 				int count = Integer.parseInt(maxCount);
@@ -28,8 +31,14 @@ public class EjDictLogic {
 	}
 	public List<EjDict> execute(String word,String mean, String maxCount) {
 		int count = Integer.parseInt(maxCount);
+		if (word == null) {
+			word = "";
+		}
+		if (mean == null) {
+			mean = "";
+		}
 		DictionaryDAO dao = new DictionaryDAO();
-		List<EjDict> dictList = dao.findByWord(word, count);
+		List<EjDict> dictList = dao.findByWord(word, mean,count);
 		return dictList;
 	}
 }

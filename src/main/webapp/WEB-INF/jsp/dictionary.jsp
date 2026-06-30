@@ -22,10 +22,11 @@ if (mean == null) {
 <head>
 <meta charset="UTF-8">
 <title>英和辞典</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <h1>英和辞典</h1>
-<form action="EjDictServlet" method="get">
+<form action="EjDictServlet" method="get" class="search">
 	<p>
 		最大検索件数：<input type="text" name="maxCount" value="<%= maxCount %>">
 	</p>
@@ -41,24 +42,24 @@ if (mean == null) {
 </form>
 <% if (errorList != null) { %>
 	<ul>
-	<% for (String error : errorList) { %>
-		<li><%= error %></li>
-	<% } %>
+		<% for (String error : errorList) { %>
+			<li><%= error %></li>
+		<% } %>
 	</ul>
 <% } %>
+
 <% if (dictList != null) { %>
 	<hr>
+
 	<% for (EjDict dict : dictList) { %>
-		<p>
-			<strong><%= dict.getWord() %></strong>
+		<p class="dict-word">
+			<%= dict.getWord() %>
 		</p>
-		<%
-		String explanation = dict.getExplanation();
-		String[] explanationArray = explanation.split(" / ");
-		%>
-		<% for (String exp : explanationArray) { %>
-			<p><%= exp %></p>
-		<% } %>
+
+		<p class="dict-explanation">
+			<%= dict.getExplanation() %>
+		</p>
+
 		<br>
 	<% } %>
 <% } %>

@@ -19,32 +19,35 @@ public class EjDictServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		request.setCharacterEncoding("UTF-8");
-
+		
 		String word = request.getParameter("word");
+		String mean = request.getParameter("mean");
 		String maxCount = request.getParameter("maxCount");
-
+		
 		// 初期表示
-		if (word == null && maxCount == null) {
+		if (word == null && mean == null && maxCount == null) {
+			word = "";
+			mean = "";
 			maxCount = "20";
 			RequestDispatcher dispatcher =
 					request.getRequestDispatcher("WEB-INF/jsp/dictionary.jsp");
 			dispatcher.forward(request, response);
 			return;
 		}
-
 		EjDictLogic logic = new EjDictLogic();
-
-		List<String> errorList = logic.validate(word, maxCount);
-
+		
+		List<String> errorList = logic.validate(word, mean, maxCount);
+		
 		request.setAttribute("word", word);
+		request.setAttribute("mean", mean);
 		request.setAttribute("maxCount", maxCount);
 
 		if (errorList.size() > 0) {
 			request.setAttribute("errorList", errorList);
 		} else {
-			List<EjDict> dictList = logic.execute(word, maxCount);
+			List<EjDict> dictList = logic.execute(word, mean, maxCount);
 			request.setAttribute("dictList", dictList);
 		}
 

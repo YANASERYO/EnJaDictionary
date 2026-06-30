@@ -10,8 +10,11 @@ import java.util.List;
 
 public class DictionaryDAO {
 	private final String JDBC_URL = "jdbc:postgresql://localhost:5432/dictionary";
+//	private final String JDBC_URL = System.getenv("DB_URL");
 	private final String DB_USER = "postgres";
-	private final String DB_PASS = "psql";
+//	private final String DB_USER = System.getenv("DB_USER");
+	private final String DB_PASS = "ryo19960925";
+//	private final String DB_PASS = System.getenv("DB_PASS");
 	public List<EjDict> findByWord(String word, String mean,int maxCount) {
 		List<EjDict> dictList = new ArrayList<>();
 
@@ -21,7 +24,7 @@ public class DictionaryDAO {
 			throw new IllegalStateException("ドライバを込めませんでした");
 		}
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String sql = "SELECT id, word, explanation FROM ejdict"
+			String sql = "SELECT id, word, explanation FROM ejdict "
 					+ "WHERE LOWER(word) LIKE LOWER(?) AND explanation LIKE ? ORDER BY word LIMIT ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, word + "%");
