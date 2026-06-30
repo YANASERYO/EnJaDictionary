@@ -20,8 +20,12 @@ public class MakeEjDict {
 //		String JDBC_URL = System.getenv("DB_URL");
 		String DB_USER = "postgres";
 //		String DB_USER = System.getenv("DB_USER");
-		String DB_PASS = "ryo19960925";
+		String DB_PASS = "psql";
 //		String DB_PASS = System.getenv("DB_PASS");
+//		if (JDBC_URL == null || DB_USER == null || DB_PASS == null) {
+//			System.out.println("環境変数エラー");
+//			return;
+//		}
 		Path path = Path.of("ejdic-hand-utf8.txt");
 		try {
 			Class.forName("org.postgresql.Driver");

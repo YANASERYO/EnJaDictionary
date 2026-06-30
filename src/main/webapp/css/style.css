@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+/*body {*/
+/*  background-color: rgb(255, 128, 64);*/
+/*}*/
+
+.search{
+  display: flex;
+  align-items: left;
+  gap: 8px;
+}
+
+.dict-word {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 5px;
+	background-color: aqua;
+}
+
+.dict-explanation {
+	font-size: 14px;
+	line-height: 1.6;
+}

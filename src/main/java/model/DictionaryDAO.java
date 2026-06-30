@@ -13,7 +13,7 @@ public class DictionaryDAO {
 //	private final String JDBC_URL = System.getenv("DB_URL");
 	private final String DB_USER = "postgres";
 //	private final String DB_USER = System.getenv("DB_USER");
-	private final String DB_PASS = "ryo19960925";
+	private final String DB_PASS = "psql";
 //	private final String DB_PASS = System.getenv("DB_PASS");
 	public List<EjDict> findByWord(String word, String mean,int maxCount) {
 		List<EjDict> dictList = new ArrayList<>();
