@@ -55,12 +55,9 @@ if (mean == null) {
 		<p class="dict-word">
 			<%= dict.getWord() %>
 		</p>
-
 		<p class="dict-explanation">
 			<%= dict.getExplanation() %>
 		</p>
-
-		<br>
 	<% } %>
 <% } %>
 </body>

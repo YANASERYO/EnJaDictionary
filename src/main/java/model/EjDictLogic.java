@@ -39,6 +39,16 @@ public class EjDictLogic {
 		}
 		DictionaryDAO dao = new DictionaryDAO();
 		List<EjDict> dictList = dao.findByWord(word, mean,count);
+		
+		int listSize = dictList.size(); 
+		
+		for (int i = 0; i < listSize; i++) {
+			EjDict dict = dictList.get(i); 
+			String oldMean = dict.getExplanation(); 
+			String newMean = oldMean.replace("/", "<br>"); 
+			
+		dict.setExplanation(newMean); 
+		}
 		return dictList;
 	}
 }

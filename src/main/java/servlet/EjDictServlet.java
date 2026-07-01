@@ -36,6 +36,7 @@ public class EjDictServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 			return;
 		}
+		
 		EjDictLogic logic = new EjDictLogic();
 		
 		List<String> errorList = logic.validate(word, mean, maxCount);
